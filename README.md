@@ -38,7 +38,9 @@ at the Domain Controller, then joined to the `lab.local` domain.
 - Domain join verified via `(Get-WmiObject Win32_ComputerSystem).Domain`
 - Connectivity to DC confirmed (`Test-NetConnection`, 1ms RTT)
 
-`screenshots/01-fs01-static-ip.png`, `02-fs01-ping-dc.png`, `03-fs01-domain-verified.png`
+![FS01 static IP configuration](screenshots/01-fs01-static-ip.png)
+![Ping test to Domain Controller](screenshots/02-fs01-ping-dc.png)
+![Domain join verified](screenshots/03-fs01-domain-verified.png)
 
 ### A2. File Shares
 Four shares created on FS01 to support departmental storage, home folders, folder
@@ -52,7 +54,8 @@ redirection, and software deployment. Home and Redirect use hidden shares (`$`).
 | `Software` | `C:\Shares\Software` | MSI deployment source |
 | `IT$` / `Finance$` | `C:\Shares\IT`, `\Finance` | Department-restricted shares |
 
-`screenshots/04-fs01-share-folders.png`, `05-fs01-smb-shares.png`
+![Share folders created on FS01](screenshots/04-fs01-share-folders.png)
+![SMB shares list](screenshots/05-fs01-smb-shares.png)
 
 ### A3. NTFS Permissions (Least Privilege)
 Permissions set with `icacls` following least-privilege principles — each department
@@ -67,7 +70,9 @@ get Read on the software source.
 | `Software` | Domain Computers | Read/Execute |
 | `Redirect` | inheritance removed; CREATOR OWNER + Domain Users (RX, this-folder-only) |
 
-`screenshots/06-fs01-ntfs-shared-software.png`, `07-fs01-ntfs-home-redirect.png`, `08-fs01-ntfs-departments.png`
+![NTFS permissions on Shared and Software](screenshots/06-fs01-ntfs-shared-software.png)
+![NTFS permissions on Home and Redirect](screenshots/07-fs01-ntfs-home-redirect.png)
+![NTFS permissions on department shares](screenshots/08-fs01-ntfs-departments.png)
 
 ### A4. Group Policy — Drive Mapping & Folder Redirection
 A GPO ("Drive Mappings - All Users") linked at the domain root maps drives per user and
@@ -84,7 +89,12 @@ Folder redirection sends Desktop & Documents to `\\FS01\Redirect$\%username%`.
 Verified on CLIENT01 for two different users (different S: drive per department),
 confirming item-level targeting works.
 
-`screenshots/09-gpo-created-linked.png`, `10-gpo-drive-maps.png`, `11-client-drives-digonz.png`, `12-client-drives-ariel.png`, `13-fs01-redirect-folders.png`, `14-client-desktop-redirected.png`
+![GPO created and linked at domain root](screenshots/09-gpo-created-linked.png)
+![Drive maps configured in GPO](screenshots/10-gpo-drive-maps.png)
+![Mapped drives on client - DiGonz (IT)](screenshots/11-client-drives-digonz.png)
+![Mapped drives on client - Ariel (Finance)](screenshots/12-client-drives-ariel.png)
+![Redirected folders on FS01](screenshots/13-fs01-redirect-folders.png)
+![Desktop redirected on client](screenshots/14-client-desktop-redirected.png)
 
 ### A5. Software Deployment via GPO
 7-Zip packaged as MSI on the `Software` share and deployed as a Computer-assigned
@@ -93,8 +103,9 @@ package. Verified installed on CLIENT01 after policy refresh + reboot.
 - Source: `\\FS01\Software\7zip.msi` — 7-Zip 24.08 (x64), Assigned
 - CLIENT01 moved to `OU=Workstations` to scope the policy
 
-`screenshots/15-client-moved-to-ou.png`, `16-software-gpo-package.png`, `17-7zip-installed-client.png`
-
+![Client moved to Workstations OU](screenshots/15-client-moved-to-ou.png)
+![7-Zip MSI package assigned via GPO](screenshots/16-software-gpo-package.png)
+![7-Zip installed on client](screenshots/17-7zip-installed-client.png)
 ---
 
 ## Part B — Hybrid Identity (Microsoft Entra Cloud Sync)
@@ -108,7 +119,8 @@ Entra ID, enabling a single hybrid identity per user.
 - Created a Group Managed Service Account (gMSA) `provAgentgMSA` for the sync agent,
   authorized for DC01$ and FS01$
 
-`screenshots/19-upn-changed-users.png`, `21-gmsa-created.png`
+![UPN suffix changed for all users](screenshots/19-upn-changed-users.png)
+![gMSA created and verified](screenshots/21-gmsa-created.png)
 
 ### B2. Agent Deployment
 - Installed Entra Cloud Sync provisioning agent on FS01
@@ -118,7 +130,11 @@ Entra ID, enabling a single hybrid identity per user.
   department OUs only (IT, HR, Finance, Management) — system/service accounts excluded
   by design (least privilege applied to cloud identity)
 
-`screenshots/20-cloudsync-star.png`, `22-agent-configured.png`
+![Cloud Sync agent download](screenshots/20-cloudsync-agent-download.png)
+![Provisioning agent configured](screenshots/22-agent-configured.png)
+![Agent active in Entra portal](screenshots/23-agent-active.png)
+![Scoping filters - 4 department OUs](screenshots/24-scoping-filters.png)
+![Users confirmed in correct OUs](screenshots/25-users-in-ous.png)
 
 ### B3. Status — Configured, sync blocked at provider gateway
 
@@ -137,6 +153,7 @@ This is documented as a known limitation rather than left hidden. On-prem identi
 management (Part A) is fully functional; the cloud sync remains a pending item at the
 provider layer.
 
+![Provisioning quarantine - gateway timeout error](screenshots/26-quarantine-error.png)
 ---
 
 ## Skills Demonstrated
