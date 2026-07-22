@@ -11,6 +11,8 @@ troubleshooting, and cloud identity sync.
 
 ---
 
+**Author:** Diago Gonzalez · [github.com/Dovahk11n0](https://github.com/Dovahk11n0)
+
 ## Environment
 
 | Component | Details |
@@ -103,9 +105,7 @@ package. Verified installed on CLIENT01 after policy refresh + reboot.
 - Source: `\\FS01\Software\7zip.msi` — 7-Zip 24.08 (x64), Assigned
 - CLIENT01 moved to `OU=Workstations` to scope the policy
 
-![Client moved to Workstations OU](screenshots/15-client-moved-to-ou.png)
-![7-Zip MSI package assigned via GPO](screenshots/16-software-gpo-package.png)
-![7-Zip installed on client](screenshots/17-7zip-installed-client.png)
+[![Client moved to Workstations OU](https://github.com/Dovahk11n0/Windows-Server-AD-HomeLab/raw/main/screenshots/15-client-moved-to-ou.png)](/Dovahk11n0/Windows-Server-AD-HomeLab/blob/main/screenshots/15-client-moved-to-ou.png) [![7-Zip MSI package assigned via GPO](https://github.com/Dovahk11n0/Windows-Server-AD-HomeLab/raw/main/screenshots/16-software-gpo-package.png)](/Dovahk11n0/Windows-Server-AD-HomeLab/blob/main/screenshots/16-software-gpo-package.png) [![7-Zip installed on client](https://github.com/Dovahk11n0/Windows-Server-AD-HomeLab/raw/main/screenshots/17-7zip-installed-client.png)](/Dovahk11n0/Windows-Server-AD-HomeLab/blob/main/screenshots/17-7zip-installed-client.png)
 ---
 
 ## Part B — Hybrid Identity (Microsoft Entra Cloud Sync)
@@ -153,7 +153,7 @@ This is documented as a known limitation rather than left hidden. On-prem identi
 management (Part A) is fully functional; the cloud sync remains a pending item at the
 provider layer.
 
-![Provisioning quarantine - gateway timeout error](screenshots/26-quarantine-error.png)
+[![Provisioning quarantine - gateway timeout error](https://github.com/Dovahk11n0/Windows-Server-AD-HomeLab/raw/main/screenshots/26-quarantine-error.png)](/Dovahk11n0/Windows-Server-AD-HomeLab/blob/main/screenshots/26-quarantine-error.png)
 ---
 
 ## Skills Demonstrated
